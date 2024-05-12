@@ -12,7 +12,10 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule): void
     {
-        // $schedule->command('inspire')->hourly();
+        //schedule to sync order from woo-commerce every day at 12 am.
+        /* This code snippet is setting up a scheduled task in a Laravel application. */
+        $schedule->command('app:sync-woo-order')
+            ->dailyAt('12:00');
     }
 
     /**
@@ -20,8 +23,14 @@ class Kernel extends ConsoleKernel
      */
     protected function commands(): void
     {
-        $this->load(__DIR__.'/Commands');
+        $this->load(__DIR__ . '/Commands');
 
         require base_path('routes/console.php');
+    }
+
+    protected function commandFailed($command, $exitCode, $output)
+    {
+        logger()->error("Command '{$command} failed with exit code {$exitCode}: {$output} ");
+        //TODO: Send email notification if command fails for better logging
     }
 }

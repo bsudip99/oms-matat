@@ -49,9 +49,9 @@ class OrderController extends BaseApiController
   {
     $orders = $this->wooCommerceService->fetchOrders();
     if ($orders) {
-      return OrderListResource::collection($orders);
+  return $orders;
     } else {
-      return false;
+      return $this->failure('Failed to fetch Order\'s list');
     }
   }
 }

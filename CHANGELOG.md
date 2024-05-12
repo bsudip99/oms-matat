@@ -13,3 +13,10 @@
 - Added Controller,Service,Repository Classes for Order element.
 - Updated unused migrations
 
+## Third Commit
+
+- Added Cron job to run every 12 am for syncing woo order
+- Added command called `app:sync-woo-order` for syncing orders from Woo-Commerce API
+- Updated WooCommerceService to handle pagination and per_page attributes.
+- Updaated line item migration file since nullable fields are not specified
+- Added woo_order_id and woo_line_item_id in order and line item table respectively for tracking woo_commerce data

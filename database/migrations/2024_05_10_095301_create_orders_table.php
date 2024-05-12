@@ -17,6 +17,7 @@ return new class extends Migration
             $statusArray = getEnumCasesArray(OrderStatus::cases());
 
             $table->id();
+            $table->integer('woo_order_id');
             $table->string('number');
             $table->string('order_key');
             $table->enum(

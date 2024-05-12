@@ -13,8 +13,10 @@ class LineItem extends Model
 
     protected $fillable = [
         'id',
+        'woo_line_item_id',
         'name',
         'product_id',
+        'variation_id',
         'quantity',
         'tax_class',
         'subtotal',

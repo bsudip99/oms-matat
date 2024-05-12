@@ -14,21 +14,22 @@ return new class extends Migration
     {
         Schema::create(DbTable::LINE_ITEMS->value, function (Blueprint $table) {
             $table->id();
+            $table->integer('woo_line_item_id');
             $table->string('name');
             $table->integer('product_id');
             $table->integer('variation_id');
-            $table->integer('quantity');
-            $table->string('tax_class');
-            $table->string('subtotal');
-            $table->string('subtotal_tax');
-            $table->string('total');
-            $table->string('total_tax');
-            $table->json('taxes');
-            $table->json('meta_data');
-            $table->string('sku');
-            $table->string('price');
-            $table->json('image');
-            $table->string('parent_name');
+            $table->integer('quantity')->nullable();
+            $table->string('tax_class')->nullable();
+            $table->string('subtotal')->nullable();
+            $table->string('subtotal_tax')->nullable();
+            $table->string('total')->nullable();
+            $table->string('total_tax')->nullable();
+            $table->json('taxes')->nullable();
+            $table->json('meta_data')->nullable();
+            $table->string('sku')->nullable();
+            $table->string('price')->nullable();
+            $table->json('image')->nullable();
+            $table->string('parent_name')->nullable();
             $table->softDeletes();
             $table->timestamps();
 
