@@ -8,8 +8,7 @@ use Illuminate\Support\Facades\Route;
  */
 
 /** ORDER ROUTES */
-Route::middleware('auth:api')->group(function () {
-  Route::prefix('users')->group(function () {
-    Route::get('', [OrderController::class, 'index'])->name('orders.index');
-  });
+
+Route::prefix('orders')->group(function () {
+  Route::get('', [OrderController::class, 'index'])->name('orders.index');
 });

@@ -10,8 +10,9 @@ class BaseApiController extends Controller
 {
 
   public function success(
-    string $message = null,
+    string $message = 'Success',
     $data = null,
+    $pagination = null,
     int $code = Response::HTTP_OK
   ): JsonResponse {
 
@@ -27,4 +28,24 @@ class BaseApiController extends Controller
     
     return response()->json($responseData, $code);
   }
+
+  public function failure(
+    string $message = 'Fail',
+    $data = null,
+    int $code = Response::HTTP_BAD_REQUEST
+  ): JsonResponse {
+
+    $responseData = [
+      'success' => false,
+      'message' => $message ?? Response::$statusTexts[$code],
+    ];
+
+    /** Checks if data is null */
+    if ($data !== null) {
+      $responseData['data'] = $data;
+    }
+    
+    return response()->json($responseData, $code);
+  }
+
 }
