@@ -103,5 +103,29 @@ The api can now be accessed at
 
     http://localhost:8000/api/v1/
 
-
 ----------
+# Routes 
+Get Order API
+
+    http://localhost:8000/api/v1/orders
+
+Search in Order API by number, order_key, customer_note
+
+    http://localhost:8000/api/v1/orders?search={query}
+ Sorting in Order API by any field in order table (sortDirection as either asc or desc)
+    
+    http://localhost:8000/api/v1/orders?sortBy={fieldName}&sortDirection={asc}
+ 
+ Filter by status
+    
+    http://localhost:8000/api/v1/orders?status={status}
+    
+ Filter between date_created (can be toggled between any of the following)
+ 
+    http://localhost:8000/api/v1/orders?startDate={YYYY-MM-DD}
+    http://localhost:8000/api/v1/orders?endDate={YYYY-MM-DD}
+    http://localhost:8000/api/v1/orders?startDate={YYYY-MM-DD}&endDate={YYYY-MM-DD}
+ 
+ Pagination
+ 
+    http://localhost:8000/api/v1/orders?per_page={number}&page={number}
