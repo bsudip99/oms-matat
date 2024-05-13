@@ -26,3 +26,7 @@
 - Updated pagination in Get Order List REST API 
 - Updated search in Order via `number,order_key,customer_note`
 - Updated README.md for readme in github
+
+## Fifth Commit
+- Updated BaseRepository and BaseRepositoryInterface classes for order by and removed unnecessary code
+- Updated .env.example and added sample for all required environment variables

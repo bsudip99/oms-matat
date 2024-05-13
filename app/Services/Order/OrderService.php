@@ -19,7 +19,9 @@ class OrderService
    */
   public function index(array $where = [], array $with = []): Builder
   {
-    return $this->orderRepository->index($where, $with)
+    $sortBy = request('sortBy'); 
+    $sortDirection = request('sortDirection'); 
+    return $this->orderRepository->index($where, $with,$sortBy,$sortDirection)
       ->when(request('search'), function ($query, $search) {
         return $query->searchQuery($search);
       });
