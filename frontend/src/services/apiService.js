@@ -13,9 +13,6 @@ export default {
   async fetchOrders(params) {
     try {
       const response = await apiClient.get('/orders', { params });
-      if (response.data.success === true) {
-        $toast.success(response.data.message);
-      }
       return response.data;
 
     } catch (error) {
