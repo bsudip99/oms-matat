@@ -30,7 +30,7 @@ class OrderController extends BaseApiController
 
     $perPage = request('per_page') ?? 10;
     try {
-      $orders = $this->orderService->index([]);
+      $orders = $this->orderService->index([],['line_items']);
       $orders = $orders->paginate($perPage);
     } catch (\Exception $exception) {
       logger()->error($exception->getMessage());
@@ -49,7 +49,7 @@ class OrderController extends BaseApiController
   {
     $orders = $this->wooCommerceService->fetchOrders();
     if ($orders) {
-  return $orders;
+      return $orders;
     } else {
       return $this->failure('Failed to fetch Order\'s list');
     }

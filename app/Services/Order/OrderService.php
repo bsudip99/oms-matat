@@ -19,6 +19,9 @@ class OrderService
    */
   public function index(array $where = [], array $with = []): Builder
   {
-    return $this->orderRepository->index($where, $with);
+    return $this->orderRepository->index($where, $with)
+      ->when(request('search'), function ($query, $search) {
+        return $query->searchQuery($search);
+      });
   }
 }

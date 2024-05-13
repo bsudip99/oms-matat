@@ -20,3 +20,9 @@
 - Updated WooCommerceService to handle pagination and per_page attributes.
 - Updaated line item migration file since nullable fields are not specified
 - Added woo_order_id and woo_line_item_id in order and line item table respectively for tracking woo_commerce data
+
+## Fourth Commit
+
+- Updated pagination in Get Order List REST API 
+- Updated search in Order via `number,order_key,customer_note`
+- Updated README.md for readme in github

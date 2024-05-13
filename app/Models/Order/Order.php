@@ -25,6 +25,9 @@ class Order extends Model
         'shipping',
     ];
 
+    /* The `protected ` property in the Order model is used to specify the data types of certain
+attributes when retrieving them from the database. In this case, it is telling Laravel that the
+'billing' and 'shipping' attributes should be treated as JSON data types. */
     protected $casts =
     [
         'billing' => 'json',
@@ -34,5 +37,12 @@ class Order extends Model
     public function line_items()
     {
         return $this->hasMany(LineItem::class);
+    }
+
+    public function scopeSearchQuery($query, $search)
+    {
+        return $query->where('number', 'ilike', '%' . $search . '%')
+            ->orWhere('order_key', 'ilike', '%' . $search . '%')
+            ->orWhere('customer_note', 'ilike', '%' . $search . '%');
     }
 }
