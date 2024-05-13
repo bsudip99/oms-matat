@@ -40,7 +40,7 @@ class OrderController extends BaseApiController
     }
 
     return $this->success(
-      "Order's list!",
+      "Order's list fetched successfully!",
       OrderListResource::collection($orders),
       new PaginationResource($orders)
     );

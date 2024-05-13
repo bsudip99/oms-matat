@@ -52,6 +52,10 @@ You can now access the server at http://localhost:8000
 
     php artisan migrate
     php artisan serve
+**Similarly frontend can be run in another terminal by: **
+
+    cd frontend
+    npm run serve
 
 ***Note*** : It's recommended to have a clean database before seeding. You can refresh your migrations at any point to clean the database by running the following command
 
@@ -95,7 +99,6 @@ The api can be accessed at [http://localhost:8000/api](http://localhost:8000/api
 
 # Testing API
 
-Run the laravel development server
 
     php artisan serve
 
@@ -104,7 +107,7 @@ The api can now be accessed at
     http://localhost:8000/api/v1/
 
 ----------
-# Routes 
+# Backend Routes 
 Get Order API
 
     http://localhost:8000/api/v1/orders
@@ -133,3 +136,19 @@ Search in Order API by number, order_key, customer_note
  Sync Order API 
     
     http://localhost:8000/api/v1/orders/syncOrder
+
+# Frontend 
+
+ Main page 
+     
+     http://localhost:8080
+
+ Search Filters are easily shown
+
+ Reset Filter button can be used to reset filters that are added.
+
+ Pagination is added below the table
+ 
+ Sync Orders button is shown in top left of table which syncs the order
+
+ Sort by can be used  by simply clicking on the table header and toggle the arrow. Sort by is given in singular data fields only

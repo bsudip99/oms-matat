@@ -58,6 +58,7 @@ attributes when retrieving them from the database. In this case, it is telling L
     {
         return $query->where('number', 'ilike', '%' . $search . '%')
             ->orWhere('order_key', 'ilike', '%' . $search . '%')
-            ->orWhere('customer_note', 'ilike', '%' . $search . '%');
+            ->orWhere('customer_note', 'ilike', '%' . $search . '%')
+            ->orWhere('total', 'ilike', '%' . $search . '%');
     }
 }

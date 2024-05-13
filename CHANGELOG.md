@@ -39,3 +39,13 @@
 - Added command for deleting unused orders, updated previous sync command for conditions created by deletion commands.
 - Created API for syncing new orders manually
 - Added migration for updating order to add `modified_date` field in Order Table
+
+## Frontend Implementation
+- Used Vue Js as front end
+- Implemented Order List page with pagination, search, filters and sync order button.
+
+
+### Todo: 
+- Need to refactor all Frontend codes.
+- Manage error messages properly
+- Add loading indicator while fetching data
