@@ -33,7 +33,7 @@ return new class extends Migration
             $table->softDeletes();
             $table->timestamps();
 
-            $table->foreignId('order_id')->constrained();
+            $table->foreignId('order_id')->constrained()->onDelete('cascade');
         });
     }
 

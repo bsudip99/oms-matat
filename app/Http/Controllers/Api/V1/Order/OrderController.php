@@ -7,6 +7,7 @@ use App\Http\Resources\Order\OrderListResource;
 use App\Http\Resources\PaginationResource;
 use App\Services\Order\OrderService;
 use App\Services\Order\WooCommerceService;
+use Exception;
 use Illuminate\Http\JsonResponse;
 
 class OrderController extends BaseApiController
@@ -30,7 +31,7 @@ class OrderController extends BaseApiController
 
     $perPage = request('per_page') ?? 10;
     try {
-      $orders = $this->orderService->index([],['line_items']);
+      $orders = $this->orderService->index([], ['line_items']);
       $orders = $orders->paginate($perPage);
     } catch (\Exception $exception) {
       logger()->error($exception->getMessage());
@@ -53,5 +54,23 @@ class OrderController extends BaseApiController
     } else {
       return $this->failure('Failed to fetch Order\'s list');
     }
+  }
+
+  public function syncNewOrders()
+  {
+    try {
+      $orders = $this->orderService->syncNewOrdersFromWoo();
+      if(!$orders)
+      {
+        throw new Exception('Failed to sync new Orders');
+      }
+    } catch (\Exception $exception) {
+      logger()->error($exception->getMessage());
+      return $this->failure('Failed to sync New Orders');
+    }
+
+    return $this->success(
+      "Order Synced!",
+    );
   }
 }

@@ -129,3 +129,7 @@ Search in Order API by number, order_key, customer_note
  Pagination
  
     http://localhost:8000/api/v1/orders?per_page={number}&page={number}
+
+ Sync Order API 
+    
+    http://localhost:8000/api/v1/orders/syncOrder

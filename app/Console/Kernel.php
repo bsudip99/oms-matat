@@ -16,6 +16,9 @@ class Kernel extends ConsoleKernel
         /* This code snippet is setting up a scheduled task in a Laravel application. */
         $schedule->command('app:sync-woo-order')
             ->dailyAt('12:00');
+
+        $schedule->command('app:delete-unused-orders')
+            ->dailyAt('01:00');
     }
 
     /**

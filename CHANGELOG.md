@@ -34,3 +34,8 @@
 ## Sixth Commit
 - Updated routes in README.md
 - Added filter,search,order in order API
+
+## Updates 13th May
+- Added command for deleting unused orders, updated previous sync command for conditions created by deletion commands.
+- Created API for syncing new orders manually
+- Added migration for updating order to add `modified_date` field in Order Table

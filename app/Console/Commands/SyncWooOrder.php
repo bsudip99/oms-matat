@@ -5,6 +5,7 @@ namespace App\Console\Commands;
 use App\Http\Controllers\Api\V1\Order\OrderController;
 use App\Models\LineItem\LineItem;
 use App\Models\Order\Order;
+use Carbon\Carbon;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\DB;
 
@@ -46,11 +47,12 @@ class SyncWooOrder extends Command
                 }
             }
             DB::commit();
-            $this->info('Order and Line Activites SYNCED!');
+            $this->info('Order and Line item SYNCED!');
+            return true;
         } catch (\Exception $e) {
             DB::rollBack();
-            logger()->error('Order and Line item table not synced');
-            $this->error('ERROR: ' . $e->getMessage());
+            logger()->error('Command error: Order and Line item table not synced');
+            $this->error('ERROR in command: ' . $e->getMessage());
         }
     }
 
@@ -70,13 +72,38 @@ class SyncWooOrder extends Command
             'customer_note' => $orderData['customer_note'],
             'billing' => $orderData['billing'],
             'shipping' => $orderData['shipping'],
+            'date_modified' => $orderData['date_modified']
         ];
 
+        // Check if the order already exists (including soft deleted)
+        $existingOrder = Order::withTrashed()->where('woo_order_id', $orderData['id'])->first();
+
+        // If the order exists and it's not deleted, update it
+        if ($existingOrder) {
+            if ($existingOrder->trashed()) {
+                // If the existing order is soft-deleted, check if it should be restored based on modification date
+                if ($orderData['date_modified'] >  deleteDataDate()) {
+                    $existingOrder->restore(); // Restore the soft-deleted order
+                    $this->updateOrder($orderData, $orderDataFiltered);
+                }
+            } else {
+                // If the existing order is not soft-deleted, update it
+                $this->updateOrder($orderData, $orderDataFiltered);
+            }
+        } else {
+            // If the order doesn't exist, create a new order
+            $this->updateOrder($orderData, $orderDataFiltered);
+        }
+
         // Sync or update the order
+
+        return true;
+    }
+
+    private function updateOrder($orderData, $orderDataFiltered)
+    {
         $order = Order::updateOrCreate(['woo_order_id' => $orderData['id']], $orderDataFiltered);
         $this->syncLineItems($order->id, $orderData['line_items']);
-
-        return $order;
     }
 
     // Method to sync line items for an order
@@ -103,7 +130,11 @@ class SyncWooOrder extends Command
                 'parent_name' => $lineItemData['parent_name'],
                 'order_id' => $orderId,
             ];
-
+            $existingLineItem = LineItem::withTrashed()->where('woo_line_item_id', $lineItemData['id'])->first();
+            if($existingLineItem && $existingLineItem->trashed())
+            {
+                $existingLineItem->restore();
+            }
             // Sync or update the line item
             LineItem::updateOrCreate(['woo_line_item_id' => $lineItemData['id']], $lineItemDataFiltered);
         }

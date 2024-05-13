@@ -23,6 +23,7 @@ class Order extends Model
         'customer_note',
         'billing',
         'shipping',
+        'date_modified'
     ];
 
     /* The `protected ` property in the Order model is used to specify the data types of certain
@@ -33,6 +34,20 @@ attributes when retrieving them from the database. In this case, it is telling L
         'billing' => 'json',
         'shipping' => 'json',
     ];
+
+    protected static function booted()
+    {
+        static::deleting(function ($order) {
+            /** 
+             * 
+             * Delete associated line items when the order is deleted
+             *
+             * Added this code since cascade on delete is 
+             * not working for some reason
+             */
+            $order->line_items()->delete();
+        });
+    }
 
     public function line_items()
     {

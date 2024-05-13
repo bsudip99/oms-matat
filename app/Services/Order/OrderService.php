@@ -4,6 +4,7 @@ namespace App\Services\Order;
 
 use App\Repositories\Order\OrderRepository;
 use Illuminate\Contracts\Database\Eloquent\Builder;
+use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\DB;
 
 class OrderService
@@ -13,7 +14,7 @@ class OrderService
   public function __construct(protected OrderRepository $orderRepository)
   {
   }
-  
+
   /**
    * @param  array  $where
    * @param  array  $with
@@ -53,5 +54,11 @@ class OrderService
       ->when(request('search'), function ($query, $search) {
         return $query->searchQuery($search);
       });
+  }
+
+  public function syncNewOrdersFromWoo()
+  {
+   $process =  Artisan::call('app:sync-woo-order');
+   return $process;
   }
 }
